@@ -579,3 +579,4 @@ Order = 20
             DefaultValue = false
             Widget.Plugin = pico.form.BooleanCheckBox
             Widget.Label = Run Node Health Checks on startup
+            

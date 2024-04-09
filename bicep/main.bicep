@@ -8,9 +8,11 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   location: location
 }
 
+
 // Virtual Network
 param vnetAddressPrefix string
 param vnetName string
+
 module virtualNetwork './network/vnet.bicep' = {
   scope: resourceGroup
   name: 'virtualNetworkDeployment'
@@ -84,6 +86,7 @@ module subnet_admin './network/subnet.bicep' = {
     vnetName: vnetName
     subnetName: subnet_admin_name
     subnetAddressPrefix: subnet_admin_addressprefix
+    nsgId: nsg.outputs.nsgId
   }
   dependsOn: [
     virtualNetwork
@@ -98,15 +101,15 @@ module subnet_compute './network/subnet.bicep' = {
     vnetName: vnetName
     subnetName: subnet_compute_name
     subnetAddressPrefix: subnet_compute_addressprefix
+    nsgId: nsg.outputs.nsgId
   }
   dependsOn: [
     virtualNetwork
-    subnet_admin
+    subnet_admin // to prevent deployment confriction
     nsg
   ]
 }
 
-/*
 module subnet_anf './network/subnet.bicep' = {
   scope: resourceGroup
   name: '${subnet_anf_name}-Deployment'
@@ -125,6 +128,7 @@ module subnet_anf './network/subnet.bicep' = {
   }
   dependsOn: [
     virtualNetwork
+    subnet_compute // to prevent deployment confriction
     nsg
   ]
 }
@@ -177,7 +181,7 @@ module anf 'br/public:avm/res/net-app/net-app-account:0.1.2' = {
   }
 }
 
-*/
+
 // Bastion
 param bastionName string
 param bastionsku string
@@ -197,6 +201,7 @@ module bastion './security/bastion.bicep' = {
     virtualNetwork
   ]
 }
+
 
 // CycleCloud VM
 param ccVMName string
@@ -257,3 +262,4 @@ module adminVM './vm/vm-simple-win10.bicep' = {
     subnet_admin
   ]
 }
+
