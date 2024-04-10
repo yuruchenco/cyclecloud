@@ -43,29 +43,48 @@
   
 ## 構築手順
 
-### Bicepの実行
+### Azureリソースのデプロイ
 
-#### VSCodeからデプロイ
+main.bicepから必要なモジュールを呼び出して構築します。
+パラメータは、main.bicepparamにまとめられていますので、必要に応じて編集しておきます。実行時にはこのパラメータファイルを指定します。
 
-![alt text](docs/images/deployfromvscode.png)
+#### Bicepの実行
+
+##### VSCodeからデプロイ
+
+以下、main.bicepを選択して、「Deploy Bicep File...」を実行します。
+command paletteで必要事項を指定しします。
+
+![VSCodeからのデプロイ](docs/images/vscode_deploy.png)
+
+詳細な手順は以下も参考にしてください。
 
 参考：[Visual Studio Code を使用して Bicep ファイルをデプロイする - Azure Resource Manager](https://learn.microsoft.com/ja-jp/azure/azure-resource-manager/bicep/deploy-vscode)
 
 
-#### CLIでのデプロイ
+##### CLIでのデプロイ
 
+以下のコマンドを実行します。
 ```
 az deployment sub create --location eastus --parameters 'main.bicepparam'
 ```
 
+詳細な手順は以下も参考にしてください。
 
 参考：[Azure CLI と Bicep ファイルを使用してリソースをデプロイする - Azure Resource Manager](https://learn.microsoft.com/ja-jp/azure/azure-resource-manager/bicep/deploy-cli)
 
+#### 実行結果の確認
+
+進行状況および結果は、Azure Portalのリソースグループの Settings → Deployments から確認可能です。
+
+![実行結果](docs/images/deployment_status.png)
 
 
-## 構築手順
-
-### Azureリソースのデプロイ
 ### CycleCloudクラスターの事前設定
+
+
 ### CycleCloudクラスターのデプロイ・起動・動作確認
+
+
+
 ### クラスターの動作確認 
