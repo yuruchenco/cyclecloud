@@ -1,6 +1,5 @@
 param location string = resourceGroup().location
 
-
 param vmName string
 param vmSize string
 param adminUsername string
@@ -10,7 +9,7 @@ param adminPassword string
 //param securityType string
 param vnetName string
 param subnetName string
-param contributorRoleId string ='b24988ac-6180-42a0-ab88-20f7382dd24c' // Contributor role ID
+param isSpotVM bool = false 
 
 resource vnet 'Microsoft.Network/virtualNetworks@2023-09-01' existing =  {
   name: vnetName
@@ -76,6 +75,9 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
     product: 'azure-cyclecloud'
   }
   properties: {
+    priority: ((isSpotVM) ? 'Spot' : null)  // Enable spot instance
+    evictionPolicy:  ((isSpotVM) ? 'Deallocate' : null) // Deallocate the VM on eviction
+
     hardwareProfile: {
       vmSize: vmSize
     }
@@ -142,16 +144,6 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
     //securityProfile: ((securityType == 'TrustedLaunch') ? securityProfileJson : null)
   }
 }
-
-/*
-module rbac '../security/rbac.bicep' = {
-  name: 'rbac-${vmName}'
-  params: {
-    principalId: vm.identity.principalId
-    roleDefinitionId: contributorRoleId
-  }
-}
-*/
 
 output vmName string = vm.name
 output vmId string = vm.id

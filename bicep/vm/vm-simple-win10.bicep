@@ -9,6 +9,7 @@ param adminPassword string
 
 param vnetName string
 param subnetName string
+param isSpotVM bool = false 
 
 var imageReference = {
   'Windows-10': {
@@ -60,6 +61,8 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   name: vmName
   location: location
   properties: {
+    priority: ((isSpotVM) ? 'Spot' : null)  // Enable spot instance
+    evictionPolicy:  ((isSpotVM) ? 'Deallocate' : null)  // Deallocate the VM on eviction
     hardwareProfile: {
       vmSize: vmSize
     }
@@ -91,7 +94,6 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
           assessmentMode: 'ImageDefault'
          }
       } 
-      allowExtensionOperations: true
     }
   }
 }

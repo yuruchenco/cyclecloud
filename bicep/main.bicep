@@ -209,6 +209,7 @@ param ccVMSize string
 param adminUsername string
 @secure()
 param adminPassword string
+param ccisSpotVM bool
 
 module ccVM './vm/vm-cyclecloud.bicep' = {
   scope: resourceGroup
@@ -221,6 +222,7 @@ module ccVM './vm/vm-cyclecloud.bicep' = {
     adminPassword: adminPassword
     vnetName: vnetName
     subnetName: subnet_admin_name
+    isSpotVM: ccisSpotVM
   }
   dependsOn: [
     virtualNetwork
@@ -244,6 +246,7 @@ module rbac './security/rbac.bicep' = {
 // Admin VM
 param adminVMName string
 param adminVMSize string
+param adminisSpotVM bool
 
 module adminVM './vm/vm-simple-win10.bicep' = {
   scope: resourceGroup
@@ -256,6 +259,7 @@ module adminVM './vm/vm-simple-win10.bicep' = {
     adminPassword: adminPassword
     vnetName: vnetName
     subnetName: subnet_admin_name
+    isSpotVM: adminisSpotVM
   }
   dependsOn: [
     virtualNetwork
