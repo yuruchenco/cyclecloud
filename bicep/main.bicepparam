@@ -1,7 +1,7 @@
 using './main.bicep'
 
 // General Parameters
-param resource_group_name = 'rg-cc'
+param resource_group_name = 'rg-cyclecloud'
 param location = 'eastus'
 
 // Network Parameters
@@ -28,9 +28,11 @@ param bastionsku = 'Standard'
 param bastionSubnetAddressPrefix = '10.0.4.0/24'
 
 // VM parameters
-param adminPassword = 'XXXXXXXXXXXX'
+param adminPassword = ''
 param adminUsername = 'cycleadmin'
 param adminVMName = 'vm-admin' 
 param adminVMSize = 'Standard_D2s_v3'
+param adminisSpotVM = true
 param ccVMName = 'vm-cyclecloud'
 param ccVMSize  = 'Standard_D2s_v3'
+param ccisSpotVM = true

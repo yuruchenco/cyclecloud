@@ -27,7 +27,7 @@ Confirm | パスワードの確認 | パスワードの確認をします。| �
 SSH Public Key | SSH公開鍵 | 展開されるクラスターなどに接続する際に利用するSSH公開鍵を設定します。 | 以下参照
 
 ssh-keygen等のコマンドを使用してSSH公開鍵を生成します。或いは、既存のSSH公開鍵を使用することもできます。
-P@ここでは、CycleCloudサーバー上でSSH公開鍵を生成し、その内容をコピーしてAzure CycleCloud管理ポータルに貼り付けます。
+ここでは、CycleCloudサーバー上でSSH公開鍵を生成し、その内容をコピーしてAzure CycleCloud管理ポータルに貼り付けます。
 
 ```text
 [cycleadmin@vm-cyclecloud .ssh]$ ssh-keygen 
@@ -52,6 +52,9 @@ The key's randomart image is:
 |  o           .  |
 +----[SHA256]-----+
 ```
+
+上記の場合は、/home/cycleadmin/.ssh/id_rsa.pub として公開鍵が生成されています。
+
 
 ## サブスクリプションの設定
 
@@ -78,8 +81,8 @@ Subscription ID | サブスクリプションID | サブスクリプションID�
 設定項目 | 設定内容 | 説明
 -----|------|---
 Default Location | East US | デフォルトのリージョンを設定します。
-Resource Group | CycleCloud001 | このCycleCloudサーバから展開されるクラスターのリソースグループを設定します。既存のリソースグループを選択することもできますが、<Create New Per Cluster>を選択すると展開されるクラスターごとにリソースグループが作成されます。
-Storage Account | ccsa001 | クラスターの設定などを格納するためのストレージアカウントを設定します。既存のストレージアカウントを設定するか、新規で作成します。入力したストレージアカウント名が既存のストレージアカウントにない場合、新規に作成されます。新規作成する場合、ストレージアカウント名はユニークである必要がありますので、注意が必要です。
+Resource Group | rg-cc | このCycleCloudサーバから展開されるクラスターのリソースグループを設定します。既存のリソースグループを選択することもできますが、<Create New Per Cluster>を選択すると展開されるクラスターごとにリソースグループが作成されます。
+Storage Account | ccsatoohta001 | クラスターの設定などを格納するためのストレージアカウントを設定します。既存のストレージアカウントを設定するか、新規で作成します。入力したストレージアカウント名が既存のストレージアカウントにない場合、新規に作成されます。新規作成する場合、ストレージアカウント名はユニークである必要がありますので、注意が必要です。
 Storage Container | cyclecloud | ストレージアカウント内に格納するためのコンテナを作ります。
 Marketplace Terms | チェックを入れる | Marketplace TermsをAcceptする
 
@@ -110,6 +113,12 @@ CycleServer username | 管理者ユーザ名 | デプロイ時に使用したvm-
 CycleServer password | 管理者ユーザのパスワード |デプロイ時に使用したvm-cycleadminの管理者ユーザのパスワードを指定します。
 
 ```bash
+cyclecloud initialize
+```
+
+実行例
+
+```bash
 [cycleadmin@vm-cyclecloud ~]$ cyclecloud initialize
 CycleServer URL: [http://localhost] https://vm-cyclecloud
 Detected untrusted certificate.  Allow?: [yes] yes
@@ -122,6 +131,12 @@ CycleCloud configuration stored in /home/cycleadmin/.cycle/config.ini
 ```
 
 次に、以下のコマンドでロッカー(CyclecCloudの設定などを保存するためのストレージアカウント)が表示できるかを確認します。
+
+```bash
+ cyclecloud locker list
+ ```
+ 
+実行例
 
 ```bash
 [cycleadmin@vm-cyclecloud ~]$ cyclecloud locker list
