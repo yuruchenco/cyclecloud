@@ -16,9 +16,9 @@ sleep 60
 （実行対象の計算ノードのQuotaが足りない場合は、ジョブがエラーとなります。）
 
 ジョブ制御コマンドの詳細については以下を参照してください。
-[qsub man | Linux Command Library](https://linuxcommandlibrary.com/man/qsub)
-[ジョブスケジューラーOpenPBS/PBS Proの使い方 - Qiita](https://qiita.com/amasaki203/items/4c78d08a100a99cfc323)
-[PBSジョブスケジューラのtips - Qiita](https://qiita.com/H1r0ak1Y0sh10ka/items/21b9a1a28bcbfbf1d8ab)
++ [qsub man | Linux Command Library](https://linuxcommandlibrary.com/man/qsub)
++ [ジョブスケジューラーOpenPBS/PBS Proの使い方 - Qiita](https://qiita.com/amasaki203/items/4c78d08a100a99cfc323)
++ [PBSジョブスケジューラのtips - Qiita](https://qiita.com/H1r0ak1Y0sh10ka/items/21b9a1a28bcbfbf1d8ab)
 
 ```bash
 qsub -l select=1:slot_type=execute hello.sh
@@ -130,6 +130,6 @@ Job ID          Username Queue    Jobname    SessID NDS TSK Memory Time  S Time
 
 ![4ノード起動中](/docs/images/4nodes_starting.png)
 
-VMSSとして4台のVMが起動している事が確認できます。
+Azure Portalから確認してみると、VMSSとして4台のVMが起動している事が確認できます。
 
 ![4ノード起動ポータルでの確認](/docs/images/4nodes_starting_on_portal.png)
