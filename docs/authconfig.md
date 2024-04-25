@@ -100,7 +100,7 @@ Entra ID との連携を行う場合、事前にAzure Portal から Entra ID の
 + Client ID：アプリケーション登録を行った際に確認した Entra ID のクライアントIDを指定します。
 + Endpoint：Azureのデプロイ先を指定します。通常はAzure Public Cloud です。
 
-![Entra ID 認証構成](images/cyclecloud_auth_config_Entra.png)
+![Entra ID 認証構成](/docs/images/cyclecloud_auth_config_Entra.png)
 
 
 実際に管理画面にアクセスしようとすると認証が求められます。Entra ID上のユーザー名とパスワードを入力し、認証を行います。ログインに成功すると以下の様に表示されます。
@@ -230,6 +230,9 @@ cloud-init の設定を行います。
 
 cloud-initに追加する全体の内容は以下の通りです。
 
+<!-- open属性なし -->
+<details><summary>cloud-init</summary>
+
 ```
 #cloud-config
 packages:
@@ -319,6 +322,9 @@ write_files:
 runcmd:
  - sh /root/adjoin.sh 2>&1>/root/logs.txt
 ```
+
+</details>
+
 設定を行うためには、クラスターメニューから、`Edit` をクリックし、`Cloud-init` を選択し、上記の設定を記述します。
 
 ![クラスターメニューEdit](/docs/images/cluster_menu_edit.png)
