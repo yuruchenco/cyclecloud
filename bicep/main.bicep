@@ -1,5 +1,8 @@
 param resource_group_name string
 param location string
+param tags object = {}
+param private bool = true
+param clientIpAddress string
 
 targetScope = 'subscription'
 
@@ -78,6 +81,8 @@ param subnet_compute_name string
 param subnet_compute_addressprefix string
 param subnet_anf_name string
 param subnet_anf_addressprefix string
+param subnet_pe_name string
+param subnet_pe_addressprefix string
 
 module subnet_admin './network/subnet.bicep' = {
   scope: resourceGroup
@@ -133,6 +138,21 @@ module subnet_anf './network/subnet.bicep' = {
   ]
 }
 
+module subnet_pe './network/subnet.bicep' = {
+  scope: resourceGroup
+  name: '${subnet_pe_name}-Deployment'
+  params: {
+    vnetName: vnetName
+    subnetName: subnet_pe_name
+    subnetAddressPrefix: subnet_pe_addressprefix
+  }
+  dependsOn: [
+    virtualNetwork
+    subnet_anf // to prevent deployment confriction
+    nsg
+  ]
+}
+
 
 // Azure NetApp Files
 param anf_account_name string
@@ -179,6 +199,40 @@ module anf 'br/public:avm/res/net-app/net-app-account:0.1.2' = {
       }
     ]
   }
+}
+
+param storageAccountName string = 'cyclecloudshare'
+param isHnsEnabled bool  = true
+param isNfsV3Enabled bool = true
+
+// Storage Account
+module storage './storage/storage-account.bicep' = {
+  name: 'storage'
+  scope: resourceGroup
+  params: {
+    storageAccountName: storageAccountName
+    location: location
+    tags: tags
+    isHnsEnabled: isHnsEnabled
+    isNfsV3Enabled: isNfsV3Enabled
+    publicNetworkAccess: (private) ? 'Disabled' : 'Enabled'
+    sku: {
+      name: 'Standard_LRS'
+    }
+    deleteRetentionPolicy: {
+      enabled: true
+      days: 2
+    }
+    // for private environment
+    private: private
+    clientIpAddress: (private) ? clientIpAddress : ''
+    vnetName: (private) ? vnetName : ''
+    peSubnetName: (private) ? subnet_pe_name : ''
+  }
+  dependsOn: [
+    virtualNetwork
+    subnet_pe
+  ]
 }
 
 
@@ -246,8 +300,9 @@ resource role 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
 param adminVMName string
 param adminVMSize string
 param adminisSpotVM bool
+param imageReference object
 
-module adminVM './vm/vm-simple-win10.bicep' = {
+module adminVM './vm/vm-win.bicep' = {
   scope: resourceGroup
   name: 'adminVM-${location}'
   params: {
@@ -259,6 +314,7 @@ module adminVM './vm/vm-simple-win10.bicep' = {
     vnetName: vnetName
     subnetName: subnet_admin_name
     isSpotVM: adminisSpotVM
+    imageReference: imageReference
   }
   dependsOn: [
     virtualNetwork
