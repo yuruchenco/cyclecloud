@@ -3,7 +3,7 @@
 ## Cluster Configuration File ##
 ################################
 
-[cluster OpenPBS_HPC02]
+[cluster OpenPBS_HPC03]
 FormLayout = selectionpanel
 Category = Schedulers
 
@@ -493,6 +493,13 @@ Order = 20
 
         [[[parameter ImageName_NCA100v4]]]
         Label = NC_A100_v4 OS
+        ParameterType = Cloud.Image
+        Config.OS = linux
+        DefaultValue = almalinux8
+        Config.Filter := Package in {"cycle.image.centos7", "cycle.image.centos8", "almalinux8"}
+
+        [[[parameter ImageName_Msv2]]]
+        Label = M128s_v2 OS
         ParameterType = Cloud.Image
         Config.OS = linux
         DefaultValue = almalinux8
