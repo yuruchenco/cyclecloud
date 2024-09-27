@@ -3,7 +3,7 @@
 ## Cluster Configuration File ##
 ################################
 
-[cluster OpenPBS_HPC03]
+[cluster OpenPBS_HPC]
 FormLayout = selectionpanel
 Category = Schedulers
 
@@ -89,6 +89,9 @@ Autoscale = $Autoscale
         [[[input-endpoint ganglia]]]
         PrivatePort = 8652
         PublicPort = 8652
+
+        [[[volume boot]]]
+        Persistent = True
 
         [[[volume sched]]]
         Size = 1024
