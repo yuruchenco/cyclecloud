@@ -20,9 +20,13 @@
   + [クラスターの動作確認](/docs/testcluster.md)
 
   + [認証構成](/docs/authconfig.md)
+  
+  + [クラスターの操作](/docs/clusteroperations.md)
+
++ [ログ管理](/docs/log.md)
+
++ [トラブルシューティング](/docs/errors.md) 
 
 + クラスター定義詳細
 
 + テンプレート詳細
-
-+ 設定ファイルでの構成 
