@@ -80,7 +80,6 @@ Autoscale = $Autoscale
     EphemeralOSDisk = $EphemeralOSDisk
     ComputerName = $ComputerName
 
-
         [[[configuration]]]
         cyclecloud.mounts.nfs_sched.disabled = true
         cyclecloud.mounts.nfs_shared.disabled = ${NFSType != "External"}
@@ -133,6 +132,8 @@ Autoscale = $Autoscale
     [[nodearray execute]]
     MachineType = $ExecuteMachineType
     MaxCoreCount = $MaxExecuteCoreCount
+    EphemeralOSDisk = true
+    ComputerName = $ComputerName
 
     Interruptible = $UseLowPrio
     AdditionalClusterInitSpecs = $ExecuteClusterInitSpecs
@@ -149,6 +150,7 @@ Autoscale = $Autoscale
     MachineType = Standard_HB120rs_v3
     MaxCoreCount = $MaxExecuteCoreCount
     ImageName = $ImageName_HBv3
+    EphemeralOSDisk = true
 
     Interruptible = $UseLowPrio_HBv3
     AdditionalClusterInitSpecs = $ExecuteClusterInitSpecs
@@ -167,6 +169,7 @@ Autoscale = $Autoscale
     MachineType = Standard_NC48ads_A100_v4
     MaxCoreCount = $MaxExecuteCoreCount
     ImageName = $ImageName_NCA100v4
+    EphemeralOSDisk = true
 
     Interruptible = $UseLowPrio_NCA100v4
     AdditionalClusterInitSpecs = $ExecuteClusterInitSpecs
@@ -183,6 +186,7 @@ Autoscale = $Autoscale
     MachineType = Standard_M128s_v2
     MaxCoreCount = $MaxExecuteCoreCount
     ImageName = $ImageName_Msv2
+    EphemeralOSDisk = true
 
     Interruptible = $UseLowPrio_Msv2
     AdditionalClusterInitSpecs = $ExecuteClusterInitSpecs
